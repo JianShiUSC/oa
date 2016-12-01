@@ -28,3 +28,41 @@ public:
         return true;
     }
 };
+
+
+public class Solution {
+	public String longestPalindrome(String s) {
+		if(s == null || s.length() == 0) {
+			return "";
+		}
+		int length = s.length();
+		String res = String.valueOf(s.charAt(0));
+		int max = 1;
+		for(int i = 1; i < length; i++) {
+			if(i-max >= 0 && isPalindrome(s.substring(i-max, i+1))) {
+				res = s.substring(i-max, i+1);
+				max = max + 1;
+			} else if(i-max-1 >= 0 && isPalindrome(s.substring(i-max-1, i+1))) {
+				res = s.substring(i-max-1, i+1);
+				max = max+2;
+			}
+		}
+		return res;
+	}
+	public boolean isPalindrome(String s) {
+		int left = 0, right = s.length() - 1;
+		char[] array = s.toCharArray();
+		while(left < right) {
+			if(array[left++] != array[right--]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+		Solution sol = new Solution();
+		String s = sol.longestPalindrome("babab");
+		System.out.println(s);
+	}
+}
